@@ -39,15 +39,34 @@ export default function Signup() {
     setUser({ ...user,[name]:value})
   }
 
+  
+
   const register = () => {
       const { username, email, password, age,adharno,phoneno,address,city,state,zipcode,bloodgroup } = user
       console.log(user);
       if( username && email && password && age && adharno && phoneno && address && city && state && zipcode && bloodgroup){
-          axios.post("http://localhost:4000/regis", user)
-          .then( res => {
+          if(phoneno > 999999999 && phoneno< 9999999999){
+            var re = /\S+@\S+\.\S+/;
+            if(re.test(email)){
+                if(adharno.length == 12){
+            axios.post("http://localhost:4000/regis", user)
+            .then( res => {
               alert(res.data.message)
               history.push("/login")
-          })
+            })}
+            else{
+                alert("enter a valid adhar no")
+            }
+        }
+        else{
+            alert("enter valid mail")
+        }
+        }
+        
+    
+        else{
+            alert("invalid phone number")
+        }
       } else {
           alert("invlid input")
       }
